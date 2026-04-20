@@ -1,0 +1,13 @@
+services:
+  auto-deploy:
+    build: .
+    container_name: auto_deploy
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "7860:7860"
+    volumes:
+      - ./deploy_history.json:/app/deploy_history.json
+      - ./.env:/app/.env
+    command: ["python", "scheduler.py"]
